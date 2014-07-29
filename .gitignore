@@ -19,3 +19,12 @@
 *.exe
 *.out
 *.app
+/ShapeMover/ipch
+/ShapeMover/*.suo
+/ShapeMover/ShapeMover/Debug
+/ShapeMover/ShapeMover/Release
+/ShapeMover/*.opensdf
+/ShapeMover/*.sdf
+/ShapeMover/bin/*.pdb
+/ShapeMover/bin/*.exe
+/ShapeMover/bin/*.ilk
