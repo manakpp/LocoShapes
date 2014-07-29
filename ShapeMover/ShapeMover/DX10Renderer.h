@@ -1,65 +1,34 @@
-// 
-//  Bachelor of Software Engineering
-//  Media Design School
-//  Auckland
-//  New Zealand
-// 
-//  Copyright (c) 2012 Media Design School
-// 
-//  Author:	Mana Khamphanpheng
-// 
-// SVN Info
-// $Author$
-// $Date$
-// $Rev$
-// 
+//
+// File:	DX10Renderer.h
+// Desc:	Header of DX10Renderer
+//
+// Author:	Mana Khamphanpheng
+// Mail:	mana.kpp@gmail.com
+//
 
 #pragma once
 
-#ifndef __MANA2012_CLASS_RENDERER_H__
-#define __MANA2012_CLASS_RENDERER_H__
+#ifndef __MK2014_CLASS_DX10RENDERER_H__
+#define __MK2014_CLASS_DX10RENDERER_H__
 
 // Library Includes
-#include <string>
-#include <Windows.h>
-#include <vector>
-#include <objidl.h>
-#include <GdiPlus.h>
-using namespace Gdiplus;
-#pragma comment (lib,"Gdiplus.lib")
+#include <D3DX10.h>
 
 // Local Includes
 #include "Renderer.h"
 
 // Types
-typedef struct TFont
-{
-	TFont::TFont()
-	:pBrush(0), pFont(0)
-	{
-
-	}
-	TFont::~TFont()
-	{
-		delete pBrush; 
-		pBrush;
-		delete pFont; 
-		pFont;
-	}
-	SolidBrush*  pBrush;
-	Font*        pFont;
-} TFont;
 
 // Constants
 
 // Prototypes
 
-class CGDIRenderer : public IRenderer
+class CDX10Renderer : public IRenderer
 {
 	// Member Functions
 public:
-	CGDIRenderer();
-	virtual ~CGDIRenderer();
+	CDX10Renderer();
+	virtual ~CDX10Renderer();
 
 	virtual bool Initialise(HINSTANCE _hInstance, HWND _hwnd, int _iClientWidth, int _iClientHeight);
 	virtual bool Shutdown();
@@ -100,8 +69,9 @@ public:
 protected:
 
 private:
-	CGDIRenderer(const CGDIRenderer& _kr);
-	CGDIRenderer& operator= (const CGDIRenderer& _kr);
+	CDX10Renderer(const CDX10Renderer& _kr);
+	CDX10Renderer& operator= (const CDX10Renderer& _kr);
+
 
 	// Member Variables
 public:
@@ -109,24 +79,16 @@ public:
 protected:
 
 private:
-	ULONG_PTR m_GDIPlusToken;
+	D3DXCOLOR m_ClearColour;
 
-	Color m_colClear;
+	ID3D10Device* m_pDevice;
+	IDXGISwapChain* m_pSwapChain;
+	ID3DX10Font* m_pFont;
+	ID3D10RasterizerState* m_pDefaultRasterState;
 
-	HDC m_hDC;
-	HBITMAP m_hSurface;
-	HBITMAP m_hOldSurface;
-	
-	Graphics* m_pGraphics;
-	Pen* m_pPen;
-	SolidBrush* m_pBrush;
-	TFont* m_pFont;
-	
-	WCHAR*	m_pBufferW;
-	char*	m_pBuffer;
-	
-	int m_iClearBrush;
-	UINT32	m_uBufferSize;
+	//CViewport*					m_pViewport;
+	ID3D10RenderTargetView*		m_pRenderTargetView;
+
 };
 
-#endif // __MANA2012_CLASS_RENDERER_H__
+#endif // __MK2014_CLASS_DX10RENDERER_H__

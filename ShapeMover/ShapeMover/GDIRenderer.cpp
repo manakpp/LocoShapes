@@ -28,9 +28,7 @@
 
 // Default Constructor
 CGDIRenderer::CGDIRenderer()
-: m_hAppInst(0)
-, m_hMainWnd(0)
-, m_hDC(0)
+: m_hDC(0)
 , m_GDIPlusToken(0)
 , m_pGraphics(0)
 , m_iClearBrush(0)
@@ -162,33 +160,6 @@ void CGDIRenderer::PopBrushColour()
 	m_pBrush->SetColor(static_cast<ARGB>(m_vecBrushColours.back()));
 }
 
-void CGDIRenderer::Resize(int _iClientWidth, int _iClientHeight)
-{
-	if(m_pGraphics)
-	{
-		delete m_pGraphics;
-		SelectObject(m_hDC, m_hOldSurface);
-		DeleteObject(m_hSurface);
-		ReleaseDC(m_hMainWnd, m_hDC);
-	}
-
-	// Create Backbuffer and window DC
-	HDC hWindowDC = ::GetDC(m_hMainWnd);
-	m_hDC = CreateCompatibleDC(hWindowDC);
-	m_hSurface = CreateCompatibleBitmap(hWindowDC, _iClientWidth, _iClientHeight);
-	ReleaseDC(m_hMainWnd, hWindowDC);
-	m_hOldSurface = static_cast<HBITMAP>(SelectObject(m_hDC, m_hSurface));
-	m_iClientHeight = _iClientHeight;
-	m_iClientWidth = _iClientWidth; 
-	
-	m_pGraphics = new Graphics(m_hDC);
-	//m_pGraphics->SetCompositingMode( CompositingModeSourceCopy );
-	m_pGraphics->SetCompositingQuality( CompositingQualityHighSpeed );
-	m_pGraphics->SetPixelOffsetMode( PixelOffsetModeNone );
-	m_pGraphics->SetSmoothingMode( SmoothingModeNone );
-	m_pGraphics->SetInterpolationMode( InterpolationModeDefault );
-}
-
 void CGDIRenderer::DrawRectangle(const TVector2& _rv2Position, const float _kfWidth, const float _kfHeight)
 {
 	m_pGraphics->DrawRectangle(m_pPen, _rv2Position.x - _kfWidth * 0.5f, _rv2Position.y - _kfHeight * 0.5f, _kfWidth, _kfHeight);
@@ -308,6 +279,33 @@ void CGDIRenderer::PrintAllignedTextF(std::string _strMessage, const TRect& _krR
 	stringFormat.SetLineAlignment((StringAlignment)_uVertAllignment);
 
 	m_pGraphics->DrawString(m_pBufferW, -1, m_pFont->pFont, RectF(_krRect.x1, _krRect.y1, _krRect.x2 - _krRect.x1, _krRect.y2 - _krRect.y1), &stringFormat, m_pFont->pBrush);
+}
+
+void CGDIRenderer::Resize(int _iClientWidth, int _iClientHeight)
+{
+	if(m_pGraphics)
+	{
+		delete m_pGraphics;
+		SelectObject(m_hDC, m_hOldSurface);
+		DeleteObject(m_hSurface);
+		ReleaseDC(m_hMainWnd, m_hDC);
+	}
+
+	// Create Backbuffer and window DC
+	HDC hWindowDC = ::GetDC(m_hMainWnd);
+	m_hDC = CreateCompatibleDC(hWindowDC);
+	m_hSurface = CreateCompatibleBitmap(hWindowDC, _iClientWidth, _iClientHeight);
+	ReleaseDC(m_hMainWnd, hWindowDC);
+	m_hOldSurface = static_cast<HBITMAP>(SelectObject(m_hDC, m_hSurface));
+	m_iClientHeight = _iClientHeight;
+	m_iClientWidth = _iClientWidth; 
+	
+	m_pGraphics = new Graphics(m_hDC);
+	//m_pGraphics->SetCompositingMode( CompositingModeSourceCopy );
+	m_pGraphics->SetCompositingQuality( CompositingQualityHighSpeed );
+	m_pGraphics->SetPixelOffsetMode( PixelOffsetModeNone );
+	m_pGraphics->SetSmoothingMode( SmoothingModeNone );
+	m_pGraphics->SetInterpolationMode( InterpolationModeDefault );
 }
 
 int CGDIRenderer::GetHeight() const

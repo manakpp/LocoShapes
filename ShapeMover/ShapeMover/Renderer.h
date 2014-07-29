@@ -92,6 +92,9 @@ protected:
 	unsigned int m_uiPenColour;
 	unsigned int m_uiBrushColour; 
 
+	HINSTANCE m_hAppInst;
+	HWND m_hMainWnd;
+
 private:
 
 

@@ -103,6 +103,12 @@
     <ClCompile Include="INIParser.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DX10Renderer.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32App.h">
@@ -184,6 +190,12 @@
       <Filter>ShapeMover\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="INIParser.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DX10Renderer.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

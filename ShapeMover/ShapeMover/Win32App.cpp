@@ -20,8 +20,10 @@
 // Local Includes
 #include "Clock.h"
 #include "GDIRenderer.h"
+#include "DX10Renderer.h"
 #include "Input.h"
 #include "Logger.h"
+#include "Colour.h"
 
 // This Include
 #include "Win32App.h"
@@ -387,8 +389,9 @@ void CWin32App::InitialiseWindow()
 
 bool CWin32App::InitialiseRenderer(HINSTANCE _hInstance, HWND _hwnd, int _iClientWidth, int _iClientHeight)
 {
-	m_pRenderer = new CGDIRenderer();
+	m_pRenderer = new CDX10Renderer();
 	m_pRenderer->Initialise(_hInstance, _hwnd, _iClientWidth, _iClientHeight);
+	m_pRenderer->SetClearColour(TColour::MakeColour(255, 125, 125, 255));
 	
 	return(true);
 }
