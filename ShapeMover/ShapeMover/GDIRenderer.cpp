@@ -100,12 +100,12 @@ bool CGDIRenderer::Shutdown()
 	delete m_pBrush;
 	m_pBrush = 0;
 	
-	delete m_pBuffer;
-	m_pBuffer = 0;
+	delete[] m_pBuffer;
+	m_pBuffer;
 
-	delete m_pBufferW;
-	m_pBufferW = 0;
-	
+	delete[] m_pBufferW;
+	m_pBufferW;
+
 	delete m_pGraphics;
 	m_pGraphics = 0;
 	

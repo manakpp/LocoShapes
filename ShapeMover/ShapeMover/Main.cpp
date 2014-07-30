@@ -23,7 +23,7 @@ int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
 				   PSTR _pstrCmdLine, int _iCommands)
 {
 	CSceneManager& theApp = CSceneManager::GetInstance();
-	if(theApp.Initialise(_hInstance, L"Shape Mover" , 800, 600))
+	if(theApp.Initialise(_hInstance, "Shape Mover" , 800, 600))
 	{
 		int iMsg = theApp.Run();
 

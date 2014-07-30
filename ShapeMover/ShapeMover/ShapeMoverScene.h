@@ -60,6 +60,8 @@ protected:
 private:
 	std::vector<CShapeMover*> m_vecShapes;
 
+	int m_iSelectedScene;
+
 
 };
 

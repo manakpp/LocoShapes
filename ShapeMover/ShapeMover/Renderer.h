@@ -19,6 +19,11 @@
 // Local Includes
 
 // Types
+enum ERenderer
+{
+	GDI,
+	DirectX10,
+};
 
 // Constants
 

@@ -73,7 +73,7 @@ void CSceneManager::DestroyInstance()
 	s_pContext = 0;
 }
 
-bool CSceneManager::Initialise(HINSTANCE _hInstance, wchar_t* _strTile, int _iClientWidth, int _iClientHeight)
+bool CSceneManager::Initialise(HINSTANCE _hInstance, const char* _strTile, int _iClientWidth, int _iClientHeight)
 {
 	srand((unsigned int)time(0));
 

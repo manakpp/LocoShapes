@@ -34,6 +34,7 @@
 class IRenderer;
 class CClock;
 class CInput;
+enum ERenderer;
 
 class CWin32App
 {
@@ -48,7 +49,7 @@ public:
 	int Run();
 
 	// To be derived:
-	virtual bool Initialise(HINSTANCE _hInstance, wchar_t* _strTile, int _iClientWidth, int _iClientHeight);
+	virtual bool Initialise(HINSTANCE _hInstance, const char* _strTile, int _iClientWidth, int _iClientHeight);
 	virtual void OnResize();
 	virtual void Process(float _fDelta);
 	virtual void Render(IRenderer& _rRenderer); 
@@ -57,13 +58,15 @@ public:
 	void UpdateFrameStats(float _fDelta);
 	void RenderFrameStats(IRenderer& _rRenderer);
 
+	bool ChangeRenderer(ERenderer _eRenderer);
+
 protected:
 	void InitialiseWindow();
 	bool InitialiseRenderer(HINSTANCE _hInstance, HWND _hwnd, int _iClientWidth, int _iClientHeight);
 	
 protected:
-	std::wstring m_strFrameStats;
-	std::wstring m_strMainWndCaption;
+	std::string m_strFrameStats;
+	std::string m_strMainWndCaption;
 	
 	IRenderer* m_pRenderer;
 	CClock* m_pClock;

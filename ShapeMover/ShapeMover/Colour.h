@@ -18,12 +18,22 @@
 // Types
 enum EColourComponent
 {
-	A,
-	R,
-	G,
-	B
+	AlphaShift  = 24,
+	RedShift    = 16,
+    GreenShift  = 8,
+    BlueShift   = 0
 
 } typedef EColourComponent;
+
+
+enum EColourMask
+{
+    AlphaMask   = 0xff000000,
+    RedMask     = 0x00ff0000,
+    GreenMask   = 0x0000ff00,
+    BlueMask    = 0x000000ff
+
+} typedef EColourMask;
 
 
 enum
@@ -181,8 +191,8 @@ struct TColour
 	// Member Functions
 public:
 	TColour();
-	TColour(unsigned char _r, unsigned char _g, unsigned char _b);
-	TColour(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a);
+	TColour(float _r, float _g, float _b);
+	TColour(float _r, float _g, float _b, float _a);
 	TColour(const unsigned int _kuiColour);
 
 	TColour(const TColour& _kr);
@@ -190,17 +200,20 @@ public:
 
 	~TColour();
 
-	unsigned int Value() const;
+	unsigned long Value() const;
 
-	static unsigned int MakeColour(unsigned char _r, unsigned char _g, unsigned char _b, unsigned char _a);
+	static unsigned long MakeColour(float _r, float _g, float _b, float _a);
+	static unsigned long MakeColour(int _r, int _g, int _b, int _a);
 
 	static float GetColourComponentF(const TColour& _krColour, EColourComponent _component);
 	static int GetColourComponent(const TColour& _krColour, EColourComponent _component);
 
-	static float GetColourComponentF(const unsigned int& _kuiColour, EColourComponent _component);
-	static int GetColourComponent(const unsigned int& _kuiColour, EColourComponent _component);
+	static float GetColourComponentF(const unsigned long& _kuiColour, EColourComponent _component);
+	static int GetColourComponent(const unsigned long& _kuiColour, EColourComponent _component);
 
-	static unsigned int TryParse(const char* _strColour);
+	static unsigned long TryParse(const char* _strColour);
+
+	static int ClampColourRange(int _iColor);
 
 protected:
 
@@ -214,7 +227,10 @@ public:
 protected:
 
 private:
-	unsigned int m_uiColour;
+	float r;
+	float g;
+	float b;
+	float a;
 
 };
 

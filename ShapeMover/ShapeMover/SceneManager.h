@@ -51,7 +51,7 @@ public:
 	static CSceneManager& GetInstance();
 	static void DestroyInstance();
 
-	bool Initialise(HINSTANCE _hInstance, wchar_t* _strTile, int _iClientWidth, int _iClientHeight);
+	bool Initialise(HINSTANCE _hInstance, const char* _strTile, int _iClientWidth, int _iClientHeight);
 	void Process(float _fDeltaTick);
 	void Render(IRenderer& _rRenderer); 
 

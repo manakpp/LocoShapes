@@ -48,10 +48,10 @@ CButton::~CButton()
 bool CButton::Initialise(const char* _strTitle, const TRect& _krRect, const int _kiButtonID)
 {
 	// Create brushes
-	s_iBrush[BUTTON_IDLE] = TColour(178, 34, 30);
-	s_iBrush[BUTTON_MOUSE_OVER] = TColour(210, 65, 30);
-	s_iBrush[BUTTON_DOWN] = TColour(100, 15, 15);
-	s_iBrush[BUTTON_PRESSED] = TColour(75, 25, 25);
+	s_iBrush[BUTTON_IDLE] = TColour(178, 34, 30, 255);
+	s_iBrush[BUTTON_MOUSE_OVER] = TColour(210, 65, 30, 255);
+	s_iBrush[BUTTON_DOWN] = TColour(100, 15, 15, 255);
+	s_iBrush[BUTTON_PRESSED] = TColour(75, 25, 25, 255);
 
 	m_strLabel = _strTitle;
 
@@ -102,10 +102,10 @@ void CButton::Render(IRenderer& _rRenderer)
 		TRect offsetRect = TRect::OffsetRect(m_Rect, fOffset, fOffset);
 
 		_rRenderer.PushBrushColour(s_iBrush[BUTTON_MOUSE_OVER].Value());
-
-		_rRenderer.DrawRectangleFill(offsetRect);
+		_rRenderer.PushPenColour(0xFF000000);
+		_rRenderer.DrawRectangleFill(offsetRect, true);
 		_rRenderer.PrintAllignedTextF(m_strLabel, offsetRect, 1, 1);
-
+		_rRenderer.PopPenColour();
 		_rRenderer.PopBrushColour();
 	}
 	else if(m_eState == BUTTON_DOWN)
@@ -113,17 +113,20 @@ void CButton::Render(IRenderer& _rRenderer)
 		float fOffset = 5.0f;
 		TRect offsetRect = TRect::OffsetRect(m_Rect, fOffset, fOffset);
 
+		_rRenderer.PushPenColour(0xFF000000);
 		_rRenderer.PushBrushColour(s_iBrush[BUTTON_DOWN].Value());
-		_rRenderer.DrawRectangleFill(offsetRect);
+		_rRenderer.DrawRectangleFill(offsetRect, true);
 		_rRenderer.PrintAllignedTextF(m_strLabel, offsetRect, 1, 1);
 		_rRenderer.PopBrushColour();
+		_rRenderer.PopPenColour();
 	}
 	else
 	{
+		_rRenderer.PushPenColour(0xFF000000);
 		_rRenderer.PushBrushColour(s_iBrush[BUTTON_IDLE].Value());
-		_rRenderer.DrawRectangleFill(m_Rect);
+		_rRenderer.DrawRectangleFill(m_Rect, true);
 		_rRenderer.PrintAllignedTextF(m_strLabel, m_Rect, 1, 1);
-
+		_rRenderer.PopPenColour();
 		_rRenderer.PopBrushColour();
 	}
 }

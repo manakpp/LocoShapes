@@ -23,6 +23,7 @@
 #include "Circle.h"
 #include "Hexagon.h"
 #include "ShapeMover.h"
+#include "SceneManager.h"
 
 // Static Variables
 
@@ -41,9 +42,16 @@ CShapeMoverScene::~CShapeMoverScene()
 
 bool CShapeMoverScene::Initialise()
 {
-	AddButton(0, "Reload from file 1", 10.0f, 10.0f, 100.0f, 50.0f);
-	AddButton(1, "Reload from file 2", 10.0f, 70.0f, 100.0f, 50.0f);
+	TVector2 startPos(10.0f, 10.0f);
+	TVector2 buttonSize(100.0f, 50.0f);
+	TVector2 buttonOffset(0.0f, 10.0f);
 
+	AddButton(0, "GDI Renderer", startPos.x, startPos.y, buttonSize.x, buttonSize.y);
+	AddButton(1, "DX10 Renderer", startPos.x + buttonOffset.x, startPos.y + (buttonSize.y  * 1.0f) + (buttonOffset.y * 1.0f), buttonSize.x, buttonSize.y);
+	AddButton(2, "Reload from file 1", startPos.x + buttonOffset.x, startPos.y + (buttonSize.y * 2.0f) + (buttonOffset.y * 2.0f), buttonSize.x, buttonSize.y);
+	AddButton(3, "Reload from file 2", startPos.x + buttonOffset.x, startPos.y + (buttonSize.y * 3.0f) + (buttonOffset.y * 3.0f), buttonSize.x, buttonSize.y);
+
+	m_iSelectedScene = 0;
 	return LoadSceneFromFile("ShapeMoverScene1");
 }
 
@@ -74,18 +82,28 @@ void CShapeMoverScene::Render(IRenderer& _rRenderer)
 
 void CShapeMoverScene::ProcessButtonMessage(const int _kiButtonID)
 {
+	ClearScene();
+
 	switch(_kiButtonID)
 	{
 	case 0:
 		{
-			ClearScene();
-			LoadSceneFromFile("ShapeMoverScene1");
+			CSceneManager::GetInstance().ChangeRenderer(GDI);
 		}
 		break;
 	case 1:
 		{
-			ClearScene();
-			LoadSceneFromFile("ShapeMoverScene2");
+			CSceneManager::GetInstance().ChangeRenderer(DirectX10);
+		}
+		break;
+	case 2:
+		{
+			m_iSelectedScene = 0;
+		}
+		break;
+	case 3:
+		{
+			m_iSelectedScene = 1;
 		}
 	default:
 		{
@@ -93,6 +111,11 @@ void CShapeMoverScene::ProcessButtonMessage(const int _kiButtonID)
 		}
 		break;
 	}
+
+	std::stringstream ss;
+	ss << "ShapeMoverScene" << m_iSelectedScene + 1;
+
+	LoadSceneFromFile(ss.str().c_str());
 }
 
 void CShapeMoverScene::ClearScene()

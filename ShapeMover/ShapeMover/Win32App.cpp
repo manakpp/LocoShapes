@@ -24,6 +24,7 @@
 #include "Input.h"
 #include "Logger.h"
 #include "Colour.h"
+#include "Rect.h"
 
 // This Include
 #include "Win32App.h"
@@ -43,7 +44,6 @@ CWin32App::CWin32App()
 , m_pRenderer(0)
 , m_pClock(0)
 , m_pInput(0)
-, m_strMainWndCaption(L"Unamed")
 {
 
 }
@@ -134,7 +134,7 @@ int CWin32App::Run()
 	return (int)msg.wParam;
 }
 
-bool CWin32App::Initialise(HINSTANCE _hInstance, wchar_t* _strTile, int _iClientWidth, int _iClientHeight)
+bool CWin32App::Initialise(HINSTANCE _hInstance, const char* _strTile, int _iClientWidth, int _iClientHeight)
 {
 	m_hAppInst = _hInstance;
 	m_strMainWndCaption = _strTile;
@@ -172,11 +172,11 @@ void CWin32App::UpdateFrameStats(float _fDelta)
 		float fps = (float)frameCnt; // fps = frameCnt / 1
 		float mspf = 1000.0f / fps;
 
-		std::wostringstream outs;
+		std::stringstream ss;
 		//outs.precision(6);
-		outs << fps << " :  FPS" << "\n" 
+		ss << fps << " :  FPS" << "\n" 
 			<< mspf <<" : MS/PF" ;
-		m_strFrameStats = outs.str();
+		m_strFrameStats = ss.str();
 		
 		// Reset for next average.
 		frameCnt = 0;
@@ -186,12 +186,41 @@ void CWin32App::UpdateFrameStats(float _fDelta)
 
 void CWin32App::RenderFrameStats(IRenderer& _rRenderer)
 {
-	//_rRenderer.RenderAllignedText(m_strFrameStats.c_str(), RectF(5.0f, 5.0f, (float)(m_iClientWidth - 10), 100.0f), 2);
+	_rRenderer.PrintAllignedTextF(m_strFrameStats.c_str(), TRect(5.0f, 5.0f, (float)(m_iClientWidth - 10), 100.0f), 2);
 }
 
 void CWin32App::Render(IRenderer& _rRenderer)
 {
 	// TODO: Render the framerate
+}
+
+bool CWin32App::ChangeRenderer(ERenderer _eRenderer)
+{
+	m_pRenderer->Shutdown();
+
+	delete m_pRenderer;
+	m_pRenderer = 0;
+
+	switch(_eRenderer)
+	{
+	case GDI:
+		{
+			m_pRenderer = new CGDIRenderer();
+		}
+		break;
+	case DirectX10:
+		{
+			m_pRenderer = new CDX10Renderer();
+		}
+		break;
+	}
+
+	if(!m_pRenderer->Initialise(m_hAppInst, m_hWnd, m_iClientWidth, m_iClientHeight))
+		return false;
+
+	m_pRenderer->SetClearColour(TColour::MakeColour(255, 125, 125, 255));
+
+	return true;
 }
 
 LRESULT CWin32App::msgProc(UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
@@ -367,8 +396,8 @@ void CWin32App::InitialiseWindow()
 	int width  = R.right - R.left;
 	int height = R.bottom - R.top;
 
-	m_hWnd = CreateWindowEx(NULL,
-								L"GDIWndClassName",
+	m_hWnd = CreateWindowExA(NULL,
+								"GDIWndClassName",
 								m_strMainWndCaption.c_str(), 
 								WS_SYSMENU | WS_CAPTION & WS_MAXIMIZE | WS_MINIMIZEBOX,
 								CW_USEDEFAULT, CW_USEDEFAULT,
@@ -389,9 +418,12 @@ void CWin32App::InitialiseWindow()
 
 bool CWin32App::InitialiseRenderer(HINSTANCE _hInstance, HWND _hwnd, int _iClientWidth, int _iClientHeight)
 {
-	m_pRenderer = new CDX10Renderer();
-	m_pRenderer->Initialise(_hInstance, _hwnd, _iClientWidth, _iClientHeight);
+	m_pRenderer = new CGDIRenderer();
+	
+	if(!m_pRenderer->Initialise(_hInstance, _hwnd, _iClientWidth, _iClientHeight))
+		return false;
+
 	m_pRenderer->SetClearColour(TColour::MakeColour(255, 125, 125, 255));
 	
-	return(true);
+	return true;
 }
