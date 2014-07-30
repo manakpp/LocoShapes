@@ -1,62 +1,82 @@
+// 
+// File: Clock.cpp
+// Desc: Implementation of Clock
+// 
+//  Author:	Mana Khamphanpheng
+//  Mail:	mana.kpp@gmail.com
+// 
+
+// Library Includes
+#include <Windows.h>
+
+// Local Includes
+
+// This Include
 #include "Clock.h"
-#include <windows.h>
+
+// Static Variables
+
 
 CClock::CClock()
-: mSecondsPerCount(0.0), mDeltaTime(-1.0), mBaseTime(0), 
-  mPausedTime(0), mPreviousTime(0), mCurrentTime(0), mStopped(false)
+: m_fSecondsPerCount(0.0)
+, m_fDeltaTime(-1.0)
+, m_iBaseTime(0)
+, m_iPausedTime(0)
+, m_iPreviousTime(0)
+, m_iCurrentTime(0)
+, m_isStopped(false)
 {
 	__int64 countsPerSec;
 	QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSec);
-	mSecondsPerCount = 1.0 / (double)countsPerSec;
+	m_fSecondsPerCount = 1.0 / (double)countsPerSec;
 }
 
-// Returns the total time elapsed since reset() was called, NOT counting any
+CClock::~CClock()
+{
+}
+
+// Returns the total time elapsed since Initialise() was called, NOT counting any
 // time when the clock is stopped.
-float CClock::getGameTime()const
+float CClock::GetGameTimeDeltaTick()const
 {
 	// If we are stopped, do not count the time that has passed since we stopped.
 	//
 	// ----*---------------*------------------------------*------> time
-	//  mBaseTime       mStopTime                      mCurrentTime
+	//  m_iBaseTime       m_iStopTime                      m_iCurrentTime
 
-	if( mStopped )
-	{
-		return (float)((mStopTime - mBaseTime)*mSecondsPerCount);
-	}
+	if(m_isStopped)
+		return (float)((m_iStopTime - m_iBaseTime)*m_fSecondsPerCount);
 
-	// The distance mCurrentTime - mBaseTime includes paused time,
+	// The distance m_iCurrentTime - m_iBaseTime includes paused time,
 	// which we do not want to count.  To correct this, we can subtract 
-	// the paused time from mCurrentTime:  
+	// the paused time from m_iCurrentTime:  
 	//
-	//  (mCurrentTime - mPausedTime) - mBaseTime 
+	//  (m_iCurrentTime - m_iPausedTime) - m_iBaseTime 
 	//
 	//                     |<-------d------->|
 	// ----*---------------*-----------------*------------*------> time
-	//  mBaseTime       mStopTime        startTime     mCurrentTime
-	
-	else
-	{
-		return (float)(((mCurrentTime-mPausedTime)-mBaseTime)*mSecondsPerCount);
-	}
+	//  m_iBaseTime       m_iStopTime        startTime     m_iCurrentTime
+
+	return (float)(((m_iCurrentTime - m_iPausedTime) - m_iBaseTime) * m_fSecondsPerCount);
 }
 
-float CClock::getDeltaTime()const
+float CClock::GetDeltaTimeTick()const
 {
-	return (float)mDeltaTime;
+	return (float)m_fDeltaTime;
 }
 
-void CClock::reset()
+void CClock::Initialise()
 {
 	__int64 currTime;
 	QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
 
-	mBaseTime = currTime;
-	mPreviousTime = currTime;
-	mStopTime = 0;
-	mStopped  = false;
+	m_iBaseTime = currTime;
+	m_iPreviousTime = currTime;
+	m_iStopTime = 0;
+	m_isStopped  = false;
 }
 
-void CClock::start()
+void CClock::Unpause()
 {
 	__int64 startTime;
 	QueryPerformanceCounter((LARGE_INTEGER*)&startTime);
@@ -66,53 +86,49 @@ void CClock::start()
 	//
 	//                     |<-------d------->|
 	// ----*---------------*-----------------*------------> time
-	//  mBaseTime       mStopTime        startTime     
+	//  m_iBaseTime       m_iStopTime        startTime     
 
-	if( mStopped )
+	if( m_isStopped )
 	{
-		mPausedTime += (startTime - mStopTime);	
+		m_iPausedTime += (startTime - m_iStopTime);	
 
-		mPreviousTime = startTime;
-		mStopTime = 0;
-		mStopped  = false;
+		m_iPreviousTime = startTime;
+		m_iStopTime = 0;
+		m_isStopped  = false;
 	}
 }
 
-void CClock::stop()
+void CClock::Pause()
 {
-	if( !mStopped )
+	if( !m_isStopped )
 	{
 		__int64 currTime;
 		QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
 
-		mStopTime = currTime;
-		mStopped  = true;
+		m_iStopTime = currTime;
+		m_isStopped = true;
 	}
 }
 
-void CClock::tick()
+void CClock::Tick()
 {
-	if( mStopped )
+	if( m_isStopped )
 	{
-		mDeltaTime = 0.0;
+		m_fDeltaTime = 0.0;
 		return;
 	}
 
 	__int64 currTime;
 	QueryPerformanceCounter((LARGE_INTEGER*)&currTime);
-	mCurrentTime = currTime;
+	m_iCurrentTime = currTime;
 
 	// Time difference between this frame and the previous.
-	mDeltaTime = (mCurrentTime - mPreviousTime)*mSecondsPerCount;
+	m_fDeltaTime = (m_iCurrentTime - m_iPreviousTime) * m_fSecondsPerCount;
 
 	// Prepare for next frame.
-	mPreviousTime = mCurrentTime;
+	m_iPreviousTime = m_iCurrentTime;
 
-	// Force nonnegative.  The DXSDK's CDXUTCClock mentions that if the 
-	// processor goes into a power save mode or we get shuffled to another
-	// processor, then mDeltaTime can be negative.
-	if(mDeltaTime < 0.0)
-	{
-		mDeltaTime = 0.0;
-	}
+	// Force nonnegative.
+	if(m_fDeltaTime < 0.0)
+		m_fDeltaTime = 0.0;
 }

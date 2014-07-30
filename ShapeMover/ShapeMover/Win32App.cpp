@@ -104,7 +104,7 @@ int CWin32App::Run()
 {
 	MSG msg = {0};
  
-	m_pClock->reset();
+	m_pClock->Initialise();
 
 	while(msg.message != WM_QUIT)
 	{
@@ -117,11 +117,11 @@ int CWin32App::Run()
 		// Otherwise, do animation/game stuff.
 		else
         {	
-			m_pClock->tick();
+			m_pClock->Tick();
 
 			if( !m_bAppPaused )
 			{
-				Process(m_pClock->getDeltaTime());	
+				Process(m_pClock->GetDeltaTimeTick());	
 			}
 			else
 			{
@@ -142,7 +142,7 @@ bool CWin32App::Initialise(HINSTANCE _hInstance, const char* _strTile, int _iCli
 	m_iClientHeight = _iClientHeight;
 
 	m_pClock = new CClock;
-	m_pClock->reset();
+	m_pClock->Initialise();
 
 	InitialiseWindow();
 
@@ -151,7 +151,7 @@ bool CWin32App::Initialise(HINSTANCE _hInstance, const char* _strTile, int _iCli
  
 void CWin32App::OnResize()
 {
-	// TODO: Manage this, if this even needs to happen
+	// TODO: Manage this
 }
 
 void CWin32App::Process(float _fDeltaTick)
@@ -167,7 +167,7 @@ void CWin32App::UpdateFrameStats(float _fDelta)
 	frameCnt++;
 
 	// Compute averages over one second period.
-	if( (m_pClock->getGameTime() - t_base) >= 1.0f )
+	if( (m_pClock->GetGameTimeDeltaTick() - t_base) >= 1.0f )
 	{
 		float fps = (float)frameCnt; // fps = frameCnt / 1
 		float mspf = 1000.0f / fps;
@@ -178,7 +178,7 @@ void CWin32App::UpdateFrameStats(float _fDelta)
 			<< mspf <<" : MS/PF" ;
 		m_strFrameStats = ss.str();
 		
-		// Reset for next average.
+		// Initialise for next average.
 		frameCnt = 0;
 		t_base  += 1.0f;
 	}
@@ -260,18 +260,18 @@ LRESULT CWin32App::msgProc(UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 	// WM_ACTIVATE is sent when the window is activated or deactivated.  
 	// We pause the game when the window is deactivated and unpause it 
 	// when it becomes active.  
-	//case WM_ACTIVATE:
-	//	if( LOWORD(_wParam) == WA_INACTIVE )
-	//	{
-	//		m_bAppPaused = true;
-	//		m_pClock->stop();
-	//	}
-	//	else
-	//	{
-	//		m_bAppPaused = false;
-	//		m_pClock->start();
-	//	}
-	//	return 0;
+	case WM_ACTIVATE:
+		if( LOWORD(_wParam) == WA_INACTIVE )
+		{
+			m_bAppPaused = true;
+			m_pClock->Pause();
+		}
+		else
+		{
+			m_bAppPaused = false;
+			m_pClock->Unpause();
+		}
+		return 0;
 
 	// WM_SIZE is sent when the user resizes the window.  
 	case WM_SIZE:
@@ -320,7 +320,7 @@ LRESULT CWin32App::msgProc(UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 						// drags the resize bars, a stream of WM_SIZE messages are
 						// sent to the window, and it would be pointless (and slow)
 						// to resize for each WM_SIZE message received from dragging
-						// the resize bars.  So instead, we reset after the user is 
+						// the resize bars.  So instead, we Initialise after the user is 
 						// done resizing the window and releases the resize bars, which 
 						// sends a WM_EXITSIZEMOVE message.
 					}
@@ -337,15 +337,15 @@ LRESULT CWin32App::msgProc(UINT _uiMsg, WPARAM _wParam, LPARAM _lParam)
 	case WM_ENTERSIZEMOVE:
 		m_bAppPaused = true;
 		m_bResizing  = true;
-		m_pClock->stop();
+		m_pClock->Pause();
 		return 0;
 
 	// WM_EXITSIZEMOVE is sent when the user releases the resize bars.
-	// Here we reset everything based on the new window dimensions.
+	// Here we Initialise everything based on the new window dimensions.
 	case WM_EXITSIZEMOVE:
 		m_bAppPaused = false;
 		m_bResizing  = false;
-		m_pClock->start();
+		m_pClock->Unpause();
 		OnResize();
 		return 0;
  

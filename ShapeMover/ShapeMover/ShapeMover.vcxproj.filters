@@ -1,21 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Framework">
-      <UniqueIdentifier>{50261847-792c-48e5-84ad-946744c5063f}</UniqueIdentifier>
+      <UniqueIdentifier>{eae41069-c9a3-4912-823b-ad28264ea82c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Header Files">
-      <UniqueIdentifier>{675aa234-9aa5-40aa-aeb2-a1176ab2e009}</UniqueIdentifier>
+      <UniqueIdentifier>{87803e98-7729-433c-b539-aa6bf577b3c3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Source Files">
-      <UniqueIdentifier>{06c45b21-817c-4e1d-b7a5-e84e96b559f0}</UniqueIdentifier>
+      <UniqueIdentifier>{40563c79-0b07-4fd3-9e0b-89c4d314b31a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ShapeMover">
-      <UniqueIdentifier>{731beab4-7170-4fb9-b393-1560ad322446}</UniqueIdentifier>
+      <UniqueIdentifier>{427dc0f8-99e6-455d-a23c-428640e0ad40}</UniqueIdentifier>
     </Filter>
     <Filter Include="ShapeMover\Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
@@ -25,18 +21,32 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="ShapeMover\Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ShapeMoverScene.cpp">
-      <Filter>ShapeMover\Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Button.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Clock.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="Colour.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DX10Renderer.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GDIRenderer.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="INIParser.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
@@ -54,73 +64,72 @@
     <ClCompile Include="LogScreen.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="Rect.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>Framework\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Win32App.cpp">
       <Filter>Framework\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Circle.cpp">
+      <Filter>ShapeMover\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hexagon.cpp">
+      <Filter>ShapeMover\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>ShapeMover\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeMover.cpp">
+      <Filter>ShapeMover\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShapeMoverScene.cpp">
+      <Filter>ShapeMover\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PathShapeMover.cpp">
+      <Filter>ShapeMover\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>ShapeMover\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Square.cpp">
       <Filter>ShapeMover\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
-      <Filter>ShapeMover\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Hexagon.cpp">
-      <Filter>ShapeMover\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Circle.cpp">
-      <Filter>ShapeMover\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GDIRenderer.cpp">
-      <Filter>Framework\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Framework\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rect.cpp">
-      <Filter>Framework\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Colour.cpp">
-      <Filter>Framework\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CircularShapeMover.cpp">
       <Filter>ShapeMover\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PathShapeMover.cpp">
-      <Filter>ShapeMover\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ShapeMover.cpp">
-      <Filter>ShapeMover\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="INIParser.cpp">
-      <Filter>Framework\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DX10Renderer.cpp">
-      <Filter>Framework\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Framework\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vertex.cpp">
-      <Filter>Framework\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32App.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Clock.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
+    <ClInclude Include="Colour.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DX10Renderer.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GDIRenderer.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INIParser.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -144,58 +153,19 @@
     <ClInclude Include="Object.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Framework\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Framework\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShapeMoverScene.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hexagon.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Triangle.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shape.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Square.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Circle.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GDIRenderer.h">
+    <ClInclude Include="Rect.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Framework\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>Framework\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rect.h">
-      <Filter>Framework\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Colour.h">
-      <Filter>Framework\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CircularShapeMover.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PathShapeMover.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShapeMover.h">
-      <Filter>ShapeMover\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="INIParser.h">
-      <Filter>Framework\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DX10Renderer.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
@@ -204,8 +174,32 @@
     <ClInclude Include="Vertex.h">
       <Filter>Framework\Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="default.fx" />
+    <ClInclude Include="CircularShapeMover.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hexagon.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PathShapeMover.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeMover.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShapeMoverScene.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>ShapeMover\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

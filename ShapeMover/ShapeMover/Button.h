@@ -71,10 +71,10 @@ public:
 protected:
 
 private:
+	TRect m_Rect;
+
 	const char* m_strLabel;
 	int m_iID;
-	
-	TRect m_Rect;
 
 	EButtonState m_eState;
 

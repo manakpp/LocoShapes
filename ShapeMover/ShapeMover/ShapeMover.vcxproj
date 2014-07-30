@@ -39,15 +39,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)ShapeMover\VLD\include;C:\Users\Mana\Documents\Projects\LocoShapes\ShapeMover\ShapeMover\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)ShapeMover\VLD\lib\Win32;C:\Users\Mana\Documents\Projects\LocoShapes\ShapeMover\ShapeMover\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)ShapeMover\VLD\include;$(SolutionDir)ShapeMover\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)ShapeMover\VLD\lib\Win32;$(SolutionDir)ShapeMover\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)ShapeMover\VLD\include;C:\Users\Mana\Documents\Projects\LocoShapes\ShapeMover\ShapeMover\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)ShapeMover\VLD\lib\Win32;C:\Users\Mana\Documents\Projects\LocoShapes\ShapeMover\ShapeMover\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)ShapeMover\VLD\include;$(SolutionDir)ShapeMover\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)ShapeMover\VLD\lib\Win32;$(SolutionDir)ShapeMover\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)bin\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -89,20 +89,19 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Colour.cpp" />
     <ClCompile Include="DX10Renderer.cpp" />
+    <ClCompile Include="GDIRenderer.cpp" />
     <ClCompile Include="Hexagon.cpp" />
     <ClCompile Include="INIParser.cpp" />
-    <ClCompile Include="PathShapeMover.cpp" />
-    <ClCompile Include="Rect.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LogFile.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LogOutputWindow.cpp" />
     <ClCompile Include="LogScreen.cpp" />
+    <ClCompile Include="PathShapeMover.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="GDIRenderer.cpp" />
+    <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="ShapeMover.cpp" />
     <ClCompile Include="ShapeMoverScene.cpp" />
@@ -120,12 +119,9 @@
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Colour.h" />
     <ClInclude Include="DX10Renderer.h" />
+    <ClInclude Include="GDIRenderer.h" />
     <ClInclude Include="Hexagon.h" />
     <ClInclude Include="INIParser.h" />
-    <ClInclude Include="PathShapeMover.h" />
-    <ClInclude Include="Rect.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LogFile.h" />
     <ClInclude Include="Logger.h" />
@@ -133,8 +129,11 @@
     <ClInclude Include="LogScreen.h" />
     <ClInclude Include="LogTarget.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="GDIRenderer.h" />
+    <ClInclude Include="PathShapeMover.h" />
+    <ClInclude Include="Rect.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="ShapeMover.h" />
     <ClInclude Include="ShapeMoverScene.h" />
@@ -144,9 +143,6 @@
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Win32App.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="default.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

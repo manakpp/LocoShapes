@@ -30,7 +30,6 @@
 // Types
 
 // Constants
-static const float fBUTTON_OFFSETY = 25.0f;
 
 // Prototypes
 class IRenderer;

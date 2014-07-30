@@ -42,6 +42,7 @@ CShapeMoverScene::~CShapeMoverScene()
 
 bool CShapeMoverScene::Initialise()
 {
+	// Create a bunch of buttons
 	TVector2 startPos(10.0f, 10.0f);
 	TVector2 buttonSize(100.0f, 50.0f);
 	TVector2 buttonOffset(0.0f, 10.0f);
@@ -51,17 +52,21 @@ bool CShapeMoverScene::Initialise()
 	AddButton(2, "Reload from file 1", startPos.x + buttonOffset.x, startPos.y + (buttonSize.y * 2.0f) + (buttonOffset.y * 2.0f), buttonSize.x, buttonSize.y);
 	AddButton(3, "Reload from file 2", startPos.x + buttonOffset.x, startPos.y + (buttonSize.y * 3.0f) + (buttonOffset.y * 3.0f), buttonSize.x, buttonSize.y);
 
+	// Load a default scene
 	m_iSelectedScene = 0;
 	return LoadSceneFromFile("ShapeMoverScene1");
 }
 
+// Processes all objects in scene
 void CShapeMoverScene::Process(float _fDeltaTick)
 {
+	// Check for button presses and act on any changes
 	if(UpdateButtons(_fDeltaTick))
 	{
 		ProcessButtonMessage(GetButtonPressedID());
 	}
 
+	// Update the positions of the all the shapes
 	unsigned int uiSize = m_vecShapes.size();
 	for(unsigned int i = 0; i < uiSize; ++i)
 	{
@@ -69,6 +74,7 @@ void CShapeMoverScene::Process(float _fDeltaTick)
 	}
 }
 
+// Renders all objects in scene
 void CShapeMoverScene::Render(IRenderer& _rRenderer)
 {
 	RenderButtons(_rRenderer);
@@ -80,6 +86,7 @@ void CShapeMoverScene::Render(IRenderer& _rRenderer)
 	}
 }
 
+// Call back for buttons.
 void CShapeMoverScene::ProcessButtonMessage(const int _kiButtonID)
 {
 	ClearScene();
@@ -112,6 +119,7 @@ void CShapeMoverScene::ProcessButtonMessage(const int _kiButtonID)
 		break;
 	}
 
+	// Load/Reload scene
 	std::stringstream ss;
 	ss << "ShapeMoverScene" << m_iSelectedScene + 1;
 
@@ -135,9 +143,8 @@ bool CShapeMoverScene::LoadSceneFromFile(const char* _strFile)
 		return false;
 	
 	// Load shapes
-
 	int i = 1;
-	while(true)
+	while(true) // Caution with this infinite loop
 	{
 		if(!LoadShape(parser, i++))
 			break;
@@ -148,6 +155,10 @@ bool CShapeMoverScene::LoadSceneFromFile(const char* _strFile)
 
 bool CShapeMoverScene::LoadShape(CINIParser& _rParser, int _iShapeID)
 {
+	// TODO: Error checking and handling for missing data
+	// Take caution :P
+
+	// Contruct the shape section name
 	std::stringstream ss;
 	ss << "Shape" << _iShapeID;
 	std::string strShape = ss.str();
@@ -245,7 +256,7 @@ bool CShapeMoverScene::LoadShape(CINIParser& _rParser, int _iShapeID)
 
 		// Add this shape mover
 		TVector2* pPoints = new TVector2[vecPoints.size()];
-		//pPoints = &vecPoints[0];
+
 		memcpy(pPoints, &vecPoints[0], sizeof(TVector2) * vecPoints.size());
 
 		CShapeMover* pShapeMover = CShapeMover::CreateWaypointMover(pShape, fSpeed, &pPoints[0], vecPoints.size());

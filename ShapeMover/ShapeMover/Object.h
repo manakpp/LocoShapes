@@ -22,40 +22,39 @@
 // Library Includes
 
 // Local Includes
-#include "GDIRenderer.h"
 
 // Types
 
 // Constants
 
 // Prototypes
+class IRenderer;
 
-
-class CObject
+class IObject
 {
 	// Member Functions
 public:
-	CObject();
-	~CObject();
+	IObject(){}
+	virtual ~IObject(){}
 
-	bool Initialise();
-	void Process(float _fDeltaTick);
-	void Render(IRenderer& _rRenderer);
+	virtual void Process(float _fDeltaTick) = 0;
+	virtual void Render(IRenderer& _rRenderer) = 0;
 
 protected:
 
 private:
-	CObject(const CObject& _kr);
-	CObject& operator= (const CObject& _kr);
+	IObject(const IObject& _kr);
+	IObject& operator= (const IObject& _kr);
 
 
 	// Member Variables
 public:
 
 protected:
+	float m_fX;
+	float m_fY;
 
 private:
-
 
 };
 

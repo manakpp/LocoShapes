@@ -1,32 +1,63 @@
+//
+// File:	Clock.h
+// Desc:	Header of Clock
+//
+// Author:	Mana Khamphanpheng
+// Mail:	mana.kpp@gmail.com
+//
 
+#pragma once
 
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef __MK2014_CLASS_CLOCK_H__
+#define __MK2014_CLASS_CLOCK_H__
+
+// Library Includes
+
+// Local Includes
+
+// Types
+
+// Constants
+
+// Prototypes
 
 class CClock
 {
+	// Member Functions
 public:
 	CClock();
+	~CClock();
 
-	float getGameTime()const;  // in seconds
-	float getDeltaTime()const; // in seconds
+	float GetGameTimeDeltaTick()const;  // in seconds
+	float GetDeltaTimeTick()const; // in seconds
 
-	void reset(); // Call before message loop.
-	void start(); // Call when unpaused.
-	void stop();  // Call when paused.
-	void tick();  // Call every frame.
+	void Initialise(); // Call before message loop.
+	void Unpause(); // Call when unpaused.
+	void Pause();  // Call when paused.
+	void Tick();  // Call every frame.
+
+protected:
 
 private:
-	double mSecondsPerCount;
-	double mDeltaTime;
+	CClock(const CClock& _kr);
+	CClock& operator= (const CClock& _kr);
 
-	__int64 mBaseTime;
-	__int64 mPausedTime;
-	__int64 mStopTime;
-	__int64 mPreviousTime;
-	__int64 mCurrentTime;
+	// Member Variables
+public:
 
-	bool mStopped;
+protected:
+
+private:
+	double m_fSecondsPerCount;
+	double m_fDeltaTime;
+
+	__int64 m_iBaseTime;
+	__int64 m_iPausedTime;
+	__int64 m_iStopTime;
+	__int64 m_iPreviousTime;
+	__int64 m_iCurrentTime;
+
+	bool m_isStopped;
 };
 
-#endif
+#endif // __MK2014_CLASS_CLOCK_H__

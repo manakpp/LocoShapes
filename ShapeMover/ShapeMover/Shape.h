@@ -14,6 +14,7 @@
 // Library Includes
 
 // Local Includes
+#include "Object.h"
 
 // Types
 enum EShape
@@ -33,7 +34,7 @@ enum EShape
 // Prototypes
 struct TVector2;
 
-class CShape
+class CShape : public IObject
 {
 	// Member Functions
 public:
@@ -60,8 +61,6 @@ private:
 public:
 
 protected:
-	float m_fX;
-	float m_fY;
 	float m_fSize;
 
 	unsigned int m_uiFillColour;
