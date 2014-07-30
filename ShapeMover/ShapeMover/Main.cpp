@@ -14,9 +14,9 @@
 // $Rev$
 // 
 
-#ifdef _DEBUG
-#include "vld.h" // Can leave this in release
-#endif
+//#ifdef _DEBUG
+//#include "vld.h" // Can leave this in release
+//#endif
 #include "SceneManager.h"
 
 int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance,
